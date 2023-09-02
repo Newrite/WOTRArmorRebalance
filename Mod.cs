@@ -1,7 +1,6 @@
 ﻿using HarmonyLib;
 using UnityModManagerNet;
 using System.Reflection;
-using Kingmaker.UnitLogic.FactLogic;
 
 namespace ArmorDamageReduction
 {

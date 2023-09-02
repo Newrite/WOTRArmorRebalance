@@ -18,17 +18,17 @@ namespace ArmorDamageReduction
 
     private static readonly string title = "Settings.Title";
     private static readonly string main = "Settings.Main";
-    private static readonly string updateResource = "Settings.UpdateResource";
-    private static readonly string updateResourceLong = "Settings.UpdateResourceLong";
-    private static readonly string updateSpellBook = "Settings.UpdateSpellBook";
-    private static readonly string updateSpellBookLong = "Settings.UpdateSpellBookLong";
+    private static readonly string updateresource = "Settings.UpdateResource";
+    private static readonly string updateresourcelong = "Settings.UpdateResourceLong";
+    private static readonly string updatespellbook = "Settings.UpdateSpellBook";
+    private static readonly string updatespellbooklong = "Settings.UpdateSpellBookLong";
 
     #endregion
 
     #region Bools
 
-    public bool UpdateResource => ModMenu.ModMenu.GetSettingValue<bool>(GetKey("updateResource"));
-    public bool UpdateSpellBook => ModMenu.ModMenu.GetSettingValue<bool>(GetKey("updateSpellBook"));
+    public bool UpdateResource => ModMenu.ModMenu.GetSettingValue<bool>(GetKey("updateresource"));
+    public bool UpdateSpellBook => ModMenu.ModMenu.GetSettingValue<bool>(GetKey("updatespellbook"));
 
     #endregion
 
@@ -39,11 +39,11 @@ namespace ArmorDamageReduction
           .New(GetKey("title"), LocalizationTool.GetString(title))
           .AddSubHeader(LocalizationTool.GetString(main), startExpanded: true)
           .AddToggle(Toggle
-            .New(GetKey("updateResource"), defaultValue: true, LocalizationTool.GetString(updateResource))
-            .WithLongDescription(LocalizationTool.GetString(updateResourceLong)))
+            .New(GetKey("updateresource"), defaultValue: true, LocalizationTool.GetString(updateresource))
+            .WithLongDescription(LocalizationTool.GetString(updateresourcelong)))
           .AddToggle(Toggle
-            .New(GetKey("updateSpellBook"), defaultValue: true, LocalizationTool.GetString(updateSpellBook))
-            .WithLongDescription(LocalizationTool.GetString(updateSpellBookLong))));
+            .New(GetKey("updatespellbook"), defaultValue: true, LocalizationTool.GetString(updatespellbook))
+            .WithLongDescription(LocalizationTool.GetString(updatespellbooklong))));
 
       Logger.Info("Initialized.");
     }

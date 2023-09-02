@@ -41,7 +41,7 @@
           <HintPath>G:\Programming\Languages\Csharp\ArmorRebalance\lib\0Harmony.dll</HintPath>
         </Reference>
         <Reference Include="Assembly-CSharp">
-          <HintPath>lib\Assembly-CSharp.dll</HintPath>
+          <HintPath>lib\Assembly-CSharp_public.dll</HintPath>
         </Reference>
         <Reference Include="AssemblyPublicizer, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
           <HintPath>packages\AssemblyPublicizer.1.0.2\lib\net472\AssemblyPublicizer.dll</HintPath>
@@ -97,7 +97,7 @@
     <Target Name="Publicize" AfterTargets="Clean">
         <ItemGroup>
             <!-- Use $(KingmakerPath)\Kingmaker_Data\Managed\Assembly-CSharp.dll for Kingmaker -->
-            <Assemblies Include="G:\Programming\Languages\Csharp\ArmorRebalance\lib\Assembly-CSharp.dll" />
+            <Assemblies Include="G:\SteamLibrary\steamapps\common\Pathfinder Second Adventure\Wrath_Data\Managed\Assembly-CSharp.dll" />
         </ItemGroup>
 
         <PublicizeTask InputAssemblies="@(Assemblies)" OutputDir="$(SolutionDir)lib/" />
