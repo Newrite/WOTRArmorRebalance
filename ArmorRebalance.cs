@@ -1,18 +1,89 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using System.Linq;
 using BlueprintCore.Blueprints.Configurators.Items.Ecnchantments;
 using BlueprintCore.Blueprints.CustomConfigurators.Classes;
+using BlueprintCore.Utils;
+using BlueprintCore.Utils.Types;
 using HarmonyLib;
+using Kingmaker.Armies.TacticalCombat;
+using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Classes;
+using Kingmaker.Blueprints.Facts;
 using Kingmaker.Blueprints.Items.Armors;
 using Kingmaker.Blueprints.Items.Ecnchantments;
 using Kingmaker.Blueprints.JsonSystem;
 using Kingmaker.Cheats;
+using Kingmaker.Enums.Damage;
 using Kingmaker.Localization;
+using Kingmaker.RuleSystem;
 using Kingmaker.UnitLogic.FactLogic;
+using Kingmaker.UnitLogic.Mechanics;
 
 namespace ArmorDamageReduction
 {
+  [AllowedOn(typeof(BlueprintUnitFact), false)]
+  [AllowedOn(typeof(BlueprintUnit), false)]
+  [AllowMultipleComponents]
+  [TypeId("2632494e9b814bce9380918a1b4f251e")]
+  public sealed class AddDamageResistancePhysicalNoTactician : AddDamageResistancePhysical
+  {
+    public override int CalculateValue(ComponentRuntime runtime)
+    {
+      return TacticalCombatHelper.IsActive ? 0 : base.CalculateValue(runtime);
+    }
+
+    public AddDamageResistancePhysicalNoTactician(
+      DamageAlignment? alignment = null,
+      bool? bypassedByAlignment = null,
+      bool? bypassedByEpic = null,
+      bool? bypassedByForm = null,
+      bool? bypassedByMagic = null,
+      bool? bypassedByMaterial = null,
+      bool? bypassedByMeleeWeapon = null,
+      bool? bypassedByReality = null,
+      bool? bypassedByWeaponType = null,
+      Blueprint<BlueprintUnitFactReference>? checkedFactMythic = null,
+      PhysicalDamageForm? form = null,
+      bool? isStackable = null,
+      PhysicalDamageMaterial? material = null,
+      int? minEnhancementBonus = null,
+      bool? or = null,
+      ContextValue? pool = null,
+      DamageRealityType? reality = null,
+      bool? usePool = null,
+      AttackTypeFlag? validWeaponAttackTypes = null,
+      WeaponFactFilter? validWeaponFact = null,
+      ContextValue? value = null,
+      Blueprint<BlueprintWeaponTypeReference>? weaponType = null)
+    {
+      Alignment = alignment ?? Alignment;
+      BypassedByAlignment = bypassedByAlignment ?? BypassedByAlignment;
+      BypassedByEpic = bypassedByEpic ?? BypassedByEpic;
+      BypassedByForm = bypassedByForm ?? BypassedByForm;
+      BypassedByMagic = bypassedByMagic ?? BypassedByMagic;
+      BypassedByMaterial = bypassedByMaterial ?? BypassedByMaterial;
+      BypassedByMeleeWeapon = bypassedByMeleeWeapon ?? BypassedByMeleeWeapon;
+      BypassedByReality = bypassedByReality ?? BypassedByReality;
+      BypassedByWeaponType = bypassedByWeaponType ?? BypassedByWeaponType;
+      m_CheckedFactMythic = (checkedFactMythic?.Reference ?? m_CheckedFactMythic) ??
+                            BlueprintTool.GetRef<BlueprintUnitFactReference>(null);
+      Form = form ?? Form;
+      m_IsStackable = isStackable ?? m_IsStackable;
+      Material = material ?? Material;
+      MinEnhancementBonus = minEnhancementBonus ?? MinEnhancementBonus;
+      Or = or ?? Or;
+      Pool = (pool ?? Pool) ?? ContextValues.Constant(0);
+      Reality = reality ?? Reality;
+      UsePool = usePool ?? UsePool;
+      ValidWeaponAttackTypes = validWeaponAttackTypes ?? ValidWeaponAttackTypes;
+      ValidWeaponFact = validWeaponFact ?? ValidWeaponFact;
+      Value = (value ?? Value) ?? ContextValues.Constant(0);
+      m_WeaponType = (weaponType?.Reference ?? m_WeaponType) ??
+                     BlueprintTool.GetRef<BlueprintWeaponTypeReference>(null);
+    }
+  }
+
   internal class ArmorRebalance
   {
     private static readonly Dictionary<int, BlueprintArmorEnchantment> Enchants =
@@ -296,7 +367,8 @@ namespace ArmorDamageReduction
       var guid = FeaturesGuids[reductionValue];
 
       var feature = FeatureConfigurator.New(name, guid)
-        .AddDamageResistancePhysical(value: reductionValue, isStackable: true).Configure();
+        .AddComponent(new AddDamageResistancePhysicalNoTactician(value: reductionValue,
+          isStackable: true)).Configure();
       Features.Add(reductionValue, feature);
 
       return Features[reductionValue];
@@ -403,7 +475,7 @@ namespace ArmorDamageReduction
         }
       }
     }
-    
+
     [HarmonyPatch(typeof(AddDamageResistancePhysical), nameof(AddDamageResistancePhysical.IsStackable),
       MethodType.Getter)]
     internal static class AddDamageResistancePhysicalMod
@@ -415,6 +487,5 @@ namespace ArmorDamageReduction
         __result = true;
       }
     }
-    
   }
 }
