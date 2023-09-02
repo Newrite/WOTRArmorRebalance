@@ -1,0 +1,32 @@
+[
+  {
+    "Key": "Settings.Title",
+    "enGB": "ArmorDamageReduction",
+    "ruRU": "ArmorDamageReduction"
+  },
+  {
+    "Key": "Settings.Main",
+    "enGB": "Main",
+    "ruRU": "Основное"
+  },
+  {
+    "Key": "Settings.UpdateResource",
+    "enGB": "Update resources",
+    "ruRU": "Обновление ресурсов"
+  },
+  {
+    "Key": "Settings.UpdateResourceLong",
+    "enGB": "Restore resources after combat",
+    "ruRU": "Восстановление ресурсов после боя"
+  },
+  {
+    "Key": "Settings.UpdateSpellBook",
+    "enGB": "Update spell book",
+    "ruRU": "Обновление книги заклинаний"
+  },
+  {
+    "Key": "Settings.UpdateSpellBookLong",
+    "enGB": "Restore spells in spellbook after combat.\nRestored spell level = Mythic level.",
+    "ruRU": "Восстановление заклинаний после боя.\nУровень восстановленных заклинаний = Мифическому уровню."
+  }
+]
